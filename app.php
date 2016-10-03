@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__.'/vendor/autoload.php';
 
-use \POI\NearestPOIToPolyLineFinder;
+use \POI\NearPOIToPolyLineFinder;
 
 $myKey = "AIzaSyDRcbylh07I94ewnVzwokn7pxogZYXObhU";
 $client = new Google_Client();
@@ -25,5 +25,5 @@ $encoded_polyline = $result->routes[0]->overview_polyline->points;
 $polyline = Polyline::decode($encoded_polyline);
 $points = Polyline::pair($polyline);
 
-print NearestPOIToPolyLineFinder::isNearToPolyline(
+print NearPOIToPolyLineFinder::isNearToPolyline(
   $points, array(33.5443856,-7.5828153));
