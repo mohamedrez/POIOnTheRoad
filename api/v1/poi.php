@@ -22,6 +22,7 @@ $response = new Response();
 
 $origin = explode(',', $request->get('origin'));
 $destination = explode(',', $request->get('destination'));
+$maxDistance = ($request->get('max_distance')) ? $request->get('max_distance') : 50 ;
 
 $polylineFetcher = new PolylineFetcher($client, $origin, $destination);
 $polyline = $polylineFetcher->getPoints();
@@ -41,7 +42,7 @@ $nearPois = array();
 foreach ($data as $point)
 {
   $formatedLatLong = array($point['latitude'], $point['longitude']);
-  if(NearPOIToPolyLineFinder::isNearToPolyline($polyline, $formatedLatLong)){
+  if(NearPOIToPolyLineFinder::isNearToPolyline($polyline, $formatedLatLong, $maxDistance)){
     $nearPois[] =  $point;
   }
 }
