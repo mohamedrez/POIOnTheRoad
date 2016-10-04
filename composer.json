@@ -10,5 +10,11 @@
     "psr-4":{
       "POI\\": "src/POI"
     }
+  },
+  "scripts": {
+      "run": [
+          "echo 'Started web server on http://localhost:8000'",
+          "php -S localhost:8000"
+      ]
   }
 }
