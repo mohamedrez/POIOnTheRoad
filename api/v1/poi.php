@@ -9,11 +9,11 @@ use \Doctrine\DBAL\Configuration;
 use \Doctrine\DBAL\DriverManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+use Noodlehaus\Config;
 date_default_timezone_set('GMT');
+$conf = Config::load(__DIR__.'/../../config/secrets.yml');
 
-
-$myKey = "AIzaSyDRcbylh07I94ewnVzwokn7pxogZYXObhU";
+$myKey = $conf->get('google_api_key');
 $client = new Google_Client();
 $client->setDeveloperKey($myKey);
 
@@ -28,12 +28,12 @@ $polylineFetcher = new PolylineFetcher($client, $origin, $destination);
 $polyline = $polylineFetcher->getPoints();
 
 
-$config = new Configuration();
+$dbConfig = new Configuration();
 $connectionParams = array(
     'path' => __DIR__.'/../../db/poi.db',
     'driver' => 'pdo_sqlite'
 );
-$db = DriverManager::getConnection($connectionParams, $config);
+$db = DriverManager::getConnection($connectionParams, $dbConfig);
 
 $pointOfInterest = new PointOfInterest($db);
 $data = $pointOfInterest->all();
